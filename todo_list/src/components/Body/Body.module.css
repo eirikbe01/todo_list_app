@@ -88,24 +88,22 @@ body{
 
 .modalInput{
     width: 100%;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.25rem;
     border: 1px solid hsl(0, 0%, 58%);
     border-radius: 8px;
     margin: 0.5rem 0;
+    outline: none;
 }
 
-.modalBtns{
+.modalBtns button{
     margin: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    border: none;
-    color: white;
+    border: 1px solid;
     cursor: pointer;
 }
 
-modalButtons button:last-child{
-    background-color: hsl(0, 0%, 58%);
-}
+
 
 button:hover{
     background-color: hsl(60, 56%, 100%);
@@ -147,6 +145,7 @@ button:hover{
     border-radius: 5px;
     padding: 5px 5px;
     box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.2);
+
 }
 
 
@@ -157,6 +156,7 @@ button:hover{
     border: 1px solid hsl(0, 0%, 58%);
     border-radius: 5px;
     box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.3);
+    outline: none;
 }
 
 .addTaskBtn,
@@ -164,6 +164,7 @@ button:hover{
 .editBtn,
 .deleteBtn,
 .searchBtn{
+    background-color: white;
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
     border: 1px solid hsl(0, 0%, 58%);
@@ -172,7 +173,7 @@ button:hover{
     cursor: pointer;
 }
 
-.taskListContainer{
+.taskList{
     display: flex;
     flex-direction: column;
     flex: 1;

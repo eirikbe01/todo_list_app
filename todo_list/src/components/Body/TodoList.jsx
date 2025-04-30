@@ -5,6 +5,10 @@ import EmojiPicker from 'emoji-picker-react';
 
 function TodoList() {
 
+    // State to add new tasks
+    const [newTask, setNewTask] = useState("");
+
+
     // State to hold the list of tasks
     const [tasks, setTasks] = useState([
         { name: "Task 1", completed: false }]);
@@ -18,15 +22,45 @@ function TodoList() {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [newListName, setNewListName] = useState("");
 
+    // State for selecting lists to add tasks to
+    const [selectedList, setSelectedList] = useState(null);
 
+
+    {/* Function to create new lists */}
     function handleCreateNewList() {
         setIsModalOpen(true);
         if (newListName) {
-            setMyLists(prevList => [...prevList, { name: newListName, emoji: newListEmoji }]);
+            setMyLists(prevList => [...prevList, 
+                                    { name: newListName, 
+                                    emoji: newListEmoji, 
+                                    tasks: [] }]);
             setNewListEmoji("");
             setNewListName("");
             setIsModalOpen(false);
         }
+    }
+
+
+    {/* Function to add new tasks to selected list */}
+    function handleAddTask() {
+        if (newTask.trim === "" || !selectedList) return;
+
+        // Update the selected list with the new task
+        setSelectedList(prev => ({
+            ...prev,
+            tasks: [...prev.tasks, newTask]
+        }));
+
+        // Update My lists in the left side-bar
+        setMyLists(prevLists => 
+            prevLists.map(list =>
+                list === selectedList ? {...list, tasks: [...list.tasks, newTask]} 
+                : list
+            )
+        );
+
+        // Clear the input field
+        setNewTask("");
     }
 
     
@@ -48,15 +82,19 @@ function TodoList() {
 
                 {/* User-created list section in left side-bar */}
                 <div className={styles.myListsBtns}>
+                    <h5>---------------------------------------------</h5>
                     <h3>My Lists</h3>
                     <button onClick={handleCreateNewList}>+ Create new list</button><br/>
                     {myLists.map((list, index) => (
-                        <button key={index}>
+                        <button 
+                            key={index}
+                            className={styles.listBtn}
+                            onClick={() => setSelectedList(list)}
+                        >
                             {list.emoji} {list.name}
                         </button>
                         
                     ))}
-                    
                 </div>
 
 
@@ -101,26 +139,39 @@ function TodoList() {
             {/* Main body */}
             <div className={styles.mainBody}>
 
-                <div className={styles.inputWrapper}>
-                    <button className={styles.addTaskBtn}>➕</button>
-                    <input type="text" placeholder="Add a new task..." className={styles.addTask}></input>
-                    
-                </div>
-                <div className={styles.taskList}>
-                    <div className={styles.taskItem}>
-                        <input type="checkbox"></input>
-                        <span>Task 1</span>
-                        <button className={styles.editBtn}>📝 Edit</button>
-                        <button className={styles.deleteBtn}>🗑️ Delete</button>
-                    </div>
-                    <div className={styles.taskItem}>
-                        <input type="checkbox"></input>
-                        <span>Task 2</span>
-                        <button className={styles.editBtn}>📝</button>
-                        <button className={styles.deleteBtn}>🗑️</button>
-                        <button className={styles.importantBtn}>❗️</button>
-                    </div>
-                </div>
+                {/*Show the name of the selected list*/}
+                {/* A ternary operator. If list is selected display the tasks. Else a prompt to select one.*/}
+                {selectedList ? (
+                    <>
+                        <h2>{selectedList.emoji} {selectedList.name}</h2>
+
+                        {/* Input for adding tasks */}
+                        <div className={styles.inputWrapper}>
+                            <button className={styles.addTaskBtn} onClick={handleAddTask}>➕</button>
+                            <input
+                                type="text"
+                                placeholder="Add a new task..."
+                                className={styles.addTask}
+                                value={newTask}
+                                onChange={(e) => setNewTask(e.target.value)}
+                            />
+                        </div>
+
+
+                        {/* List of tasks */}
+                        <div className={styles.taskList}>
+                            {selectedList.tasks.map((task, index) => (
+                                <div key={index} className={styles.taskItem}>
+                                    <input type="checkbox" />
+                                    <span>{task}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <p>Please select a list to start adding tasks.</p>
+                )}
+
             </div>
             
             {/* Right side-bar */}
