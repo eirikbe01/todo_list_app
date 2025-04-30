@@ -14,6 +14,7 @@ body{
     margin-top: 10px;
 }
 
+/* LEFT SIDEBAR STYLES */
 .leftSidebar{
     background-color: hsl(0, 0%, 100%);
     border: 1px solid hsl(0, 0%, 58%);
@@ -64,7 +65,7 @@ body{
     box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
-/* MODAL STYLES */
+/* MODAL STYLES (IN LEFT SIDEBAR)*/
 .modalOverlay{
     position: fixed;
     top: 0;
@@ -119,6 +120,10 @@ button:hover{
   }
   
 
+
+
+  /* MAIN BODY STYLES */
+
 .mainBody{
     /*background-color: rgb(255, 238, 0);*/
     display: flex;
@@ -148,7 +153,6 @@ button:hover{
 
 }
 
-
 .addTask{
     flex: 1;
     padding: 0.5rem;
@@ -174,13 +178,60 @@ button:hover{
 }
 
 .taskList{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
+    margin-top: 10px;
 }
 
+.taskItem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 0.75rem 0.75rem;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 
+.checkComplete{
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.taskName{
+    flex: 1;
+    margin-left: 12px;
+    font-size: 1.2rem;
+    color: hsl(0, 0%, 20%);
+}
+
+.completedTask{
+    text-decoration: line-through;
+    color: hsl(0, 0%, 50%);
+}
+
+.importantBtn{
+    background: none;
+    border: 1px solid hsl(0, 0%, 58%);
+    color: #ffcc00;
+    padding: 0.5rem 0.75rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.importantBtn:hover{
+    background-color: #fff7cc;
+}
+
+.importantActive{
+    background-color: #ffcc00;
+    color: white;
+}
+/* STYLES RIGHT SIDEBAR */
 .rightSidebar{
     background-color: hsl(0, 0%, 100%);
     border: 1px solid hsl(0, 0%, 58%);
