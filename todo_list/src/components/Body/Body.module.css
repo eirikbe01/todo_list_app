@@ -14,7 +14,7 @@ body{
     margin-top: 10px;
 }
 
-/* LEFT SIDEBAR STYLES */
+/* SIDEBAR STYLES */
 .leftSidebar{
     background-color: hsl(0, 0%, 100%);
     border: 1px solid hsl(0, 0%, 58%);
@@ -104,13 +104,6 @@ body{
     cursor: pointer;
 }
 
-
-
-button:hover{
-    background-color: hsl(60, 56%, 100%);
-    transform: scale(1.03);
-}
-
 .emojiPickerWrapper {
     position: absolute;
     top: 50%;
@@ -118,7 +111,11 @@ button:hover{
     transform: translate(-50%, 0);
     z-index: 60;
   }
-  
+
+button:hover{
+    background-color: hsl(60, 56%, 100%);
+    transform: scale(1.03);
+}
 
 
 
@@ -191,7 +188,7 @@ button:hover{
     max-width: 600px;
     border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .checkComplete{
@@ -212,6 +209,7 @@ button:hover{
     color: hsl(0, 0%, 50%);
 }
 
+/* IMPORTANT BUTTON STYLES */
 .importantBtn{
     background: none;
     border: 1px solid hsl(0, 0%, 58%);
@@ -231,17 +229,7 @@ button:hover{
     background-color: #ffcc00;
     color: white;
 }
-/* STYLES RIGHT SIDEBAR */
-.rightSidebar{
-    background-color: hsl(0, 0%, 100%);
-    border: 1px solid hsl(0, 0%, 58%);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.4);
-    height: 100vh;
-    width: 250px;
-    padding: 20px 20px;
-    margin-right: 15px;
-}
+
 
 
 

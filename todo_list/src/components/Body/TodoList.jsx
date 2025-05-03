@@ -21,16 +21,10 @@ function TodoList() {
     const [newListEmoji, setNewListEmoji] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [newListName, setNewListName] = useState("");
+    
     // State for selecting lists to add tasks to
     const [selectedList, setSelectedList] = useState(null);
 
-
-    // State for the categories in the left side-bar
-    const [allTasks, setAllTasks] = useState([]);
-    const [todayTasks, setTodayTasks] = useState([])
-    const [importantTasks, setImportantTasks] = useState([]);
-    const [calendarTasks, setCalendarTasks] = useState([]);
-    const [completedTasks, setCompletedTasks] = useState([]);
 
     // State to hold the list of user-created lists
     const [myLists, setMyLists] = useState([]);
@@ -78,15 +72,10 @@ function TodoList() {
 
         // Clear the input field
         setNewTask("");
+        console.log(`${updatedList.name} ${updatedList.tasks}`);
+        console.log(`My Lists ${myLists.tasks}`);
     }
 
-    function handleDeleteTask(task) {
-        return <></>
-    }
-
-    function handleEditTaks(task) {
-        return <></>
-    }
 
     {/* Function to toggle the completed state of a task */}
     function handleToggleCompleted(taskId) {
@@ -116,6 +105,8 @@ function TodoList() {
             task.id === taskId ? {...task, important: !task.important } : task
         );
 
+
+
         // and update the selected list
         const updatedList = {...selectedList, tasks: updatedTasks };
         setSelectedList(updatedList);
@@ -126,9 +117,6 @@ function TodoList() {
         );
     }
 
-    function handleAddToCalendar(task) {
-        return <></>
-    }
 
     
     return(
@@ -260,16 +248,6 @@ function TodoList() {
 
             </div>
             
-            {/* Right side-bar */}
-            <div className={styles.rightSidebar}>
-                <h3>Task Details</h3>
-                <input type="radio"></input><br/>
-                <button>🗑️Delete</button><br/>
-                <button>📝Edit</button><br/>
-                <button>📅Due Date</button><br/>
-                <button>🔔Reminder</button><br/>
-                <button>🔄Repeat</button>
-            </div>
         </div>
     );
 }
