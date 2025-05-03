@@ -9,8 +9,12 @@ import styles from './TaskInput.module.css';
 function TaskInput({ onAddTask }) {
 
     const [newTask, setNewTask] = useState("");
+
+    // Trimmed version of the new task
+    // This is used to check if the task is empty when the user presses enter
+    const trimmed = newTask.trim();
     const submit = () => {
-        onAddTask(newTask);
+        onAddTask(trimmed);
         // Clear the input field after adding the task
         setNewTask("");
     };
@@ -22,11 +26,12 @@ function TaskInput({ onAddTask }) {
                 placeholder="Add a new task..."
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && submit()}
+                onKeyDown={e => e.key === 'Enter' && trimmed && submit()}
             />
             <button
                 className={styles.addTaskBtn}
                 onClick={submit}
+                disabled={!trimmed}
             >
                 ➕
             </button>
