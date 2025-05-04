@@ -4,6 +4,7 @@ import Sidebar from './Sidebar/Sidebar.jsx';
 import CreateListModal from './CreateListModal/CreateListModal.jsx';
 import TaskArea from './TaskArea/TaskArea.jsx';
 import { v4 as uuidv4 } from 'uuid';
+import CalendarView from './CalendarView/CalendarView.jsx';
 
 function NewTodoList() {
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './TaskArea.module.css';
 import TaskInput from '../TaskInput/TaskInput.jsx';
 import TaskList from '../TaskList/TaskList.jsx';
+import CalendarView from '../CalendarView/CalendarView.jsx';
 
 
 { /* Displays the main body (or middle part) of the page */ }
@@ -24,7 +25,6 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
         title = `${selectedList.emoji} ${selectedList.name}`;
     } else {
         // Category view
-        title = "Please select a list to view tasks";
         const allTasks = lists.flatMap(list => list.tasks);
 
         // Flatten the tasks array
@@ -41,6 +41,9 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
                 tasks = allTasks.filter(task => task.important);
                 title = "❗️ Important Tasks";
                 break;
+            case "calendar":
+                title = "📆 Calendar View";
+                break;
             case "completed":
                 tasks = allTasks.filter(task => task.completed);
                 title = "✅ Completed Tasks";
@@ -50,12 +53,23 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
                 title = "";
         }
     }
+
+
+    // If the calendar view is selected, render it
+    if (selectedView.type === "category" && selectedView.key === "calendar") {
+        return (
+            <div className={styles.taskAreaContainer}>
+                <h2 className={styles.listTitle}>{title}</h2>
+                <CalendarView lists={lists}/>
+            </div>
+        );
+    }
     
     
     return(
         <div className={styles.taskAreaContainer}>
             <h2 className={styles.listTitle}>
-                {selectedList ? title : "Select a list to view tasks"}
+                {selectedList || selectedView.type === "category" ? title : "Select a list to view tasks"}
             </h2>
             {/* Only allows adding when viewing a single list */}
             {selectedList && (

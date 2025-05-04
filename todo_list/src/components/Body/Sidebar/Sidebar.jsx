@@ -25,6 +25,7 @@ function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreat
                 placeholder="Search tasks..."
                 className={styles.searchBar}
             />
+            {/*<button className={styles.searchBtn} onClick={() => searchTasks()}>🔍</button>*/}
     
             <div className={styles.categoryBtns}>
                 <button 
@@ -44,7 +45,12 @@ function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreat
                     ❗️ Important
                 </button><br/>
 
-                <button className={styles.categoryBtn}>📆 Calendar</button><br/>
+                <button 
+                    className={styles.categoryBtn}
+                    onClick={() => onSelectCategory('calendar')}
+                >
+                    📆 Calendar
+                </button><br/>
 
 
                 <button 
