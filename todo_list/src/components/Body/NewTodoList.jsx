@@ -18,9 +18,14 @@ function NewTodoList() {
     // State to hold the list of user-created lists
     const [myLists, setMyLists] = useState([]);
     // State for selecting lists to add tasks to
-    const [selectedList, setSelectedList] = useState(null);
+    //const [selectedList, setSelectedList] = useState(null);
     // State for modal to create new lists
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [selectedView, setSelectedView] = useState({
+        type: "list",
+        id: null
+    })
 
 
     {/* FUNCTIONS */}
@@ -28,19 +33,24 @@ function NewTodoList() {
     function handleCreateNewList( { name, emoji }) {
         // Create a new list object
         const newList = {
-            id: Date.now(),
+            id: uuidv4(),
             name: name,
             emoji: emoji,
             tasks: []
         };
+        // Add the new list to the array of user-created lists
         setMyLists(prev => [...prev, newList]);
-        setSelectedList(newList);
+
+        // Set the selected view to the new list
+        setSelectedView({type: "list", listId: newList.id});
+
+        // Close the modal
         setIsModalOpen(false);
     }
 
     {/* Function to add new tasks to selected list */}
     function handleAddTask(taskName) {
-        if (taskName.trim === "" || !selectedList) return;
+        if (taskName.trim === "" || selectedView.type !== "list") return;
 
         // Create a new task object
         const newTaskObj = {
@@ -50,6 +60,8 @@ function NewTodoList() {
             important: false
         };  
 
+        // Find the selected list
+        const selectedList = myLists.find(list => list.id === selectedView.listId);
         // Create an updated list with the new task
         const updatedList = {
             ...selectedList, tasks: [...selectedList.tasks, newTaskObj]
@@ -61,55 +73,18 @@ function NewTodoList() {
                 list.id === selectedList.id ? updatedList : list
             )
         );
-        // Update the selected list
-        setSelectedList(updatedList);
-
     }
 
-
-    {/* Function to toggle the completed state of a task */}
-    function handleToggleCompleted(taskId) {
-        // Create a new copy of the task from the selected list
-        // change the "completed" property of the task to true
-
-        const updatedTasks = selectedList.tasks.map(task =>
-            task.id === taskId ? { ...task, completed: !task.completed } : task
-        );
-
-        // and update the selected list
-        const updatedList = { ...selectedList, tasks: updatedTasks };
-        setSelectedList(updatedList);
-        setMyLists(prevLists =>
-            prevLists.map(list =>
-                list === selectedList ? updatedList : list
-            )
-        );
-        return <></>
-    }
-    
-    {/* Function to toggle the important state of a task */}
-    function handleToggleImportant(taskId) {
-        // Create a new copy of the task from the selected list
-        // change the "important" property of the task to true
-        const updatedTasks = selectedList.tasks.map(task =>
-            task.id === taskId ? {...task, important: !task.important } : task
-        );
-
-
-
-        // and update the selected list
-        const updatedList = {...selectedList, tasks: updatedTasks };
-        setSelectedList(updatedList);
-        setMyLists(prevLists =>
-            prevLists.map(list =>
-                list === selectedList ? updatedList : list
-            )
-        );
-    }
 
     {/* Function to toggle flags (important, completed) */}
     function toggleTask(taskId, field) {
-        if (!selectedList) return;
+        // If the selected view is not a list, return nothing
+        if (selectedView.type !== "list") return;
+
+        // Get the selected list
+        const selectedList = myLists.find(list => list.id === selectedView.listId);
+
+        // Update the task objects and the selected list in view
         const updatedTasks = selectedList.tasks.map(task => 
             task.id === taskId ? { ...task, [field]: !task[field] } : task
         );
@@ -121,8 +96,6 @@ function NewTodoList() {
                 list.id === updatedList.id ? updatedList : list
             )
         );
-        // Update the selected list
-        setSelectedList(updatedList);
     }
 
     return(
@@ -131,14 +104,20 @@ function NewTodoList() {
             {/* Left side-bar */}
             <Sidebar
                 lists={myLists}
-                onSelectList={setSelectedList}
+                selectedView={selectedView}
+                onSelectList={listId => 
+                    setSelectedView({ type: "list", listId })
+                }
+                onSelectCategory={key =>
+                    setSelectedView({ type: "category", key })
+                }
                 onCreateList={() => setIsModalOpen(true)}
-                selectedId={selectedList ? selectedList.id : null}
             />
 
             {/* Main body */}
             <TaskArea
-                list={selectedList}
+                lists={myLists}
+                selectedView={selectedView}
                 onAddTask={handleAddTask}
                 onToggleComplete={id => toggleTask(id, "completed")}
                 onToggleImportant={id => toggleTask(id, "important")}

@@ -133,6 +133,7 @@ function TodoList() {
                     <button>💡Today</button><br/>
                     <button>❗️Important</button><br/>
                     <button>📆Calendar</button>
+                    <button>✅Completed</button>
                 </div>
 
                 {/* User-created list section in left side-bar */}

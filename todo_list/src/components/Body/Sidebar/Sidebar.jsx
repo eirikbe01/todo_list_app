@@ -8,7 +8,16 @@ import React from 'react';
 import styles from './Sidebar.module.css';
 
 
-function Sidebar( { lists, onSelectList, onCreateList, selectedId}) {
+function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreateList }) {
+
+    // used to highlight the selected list / category
+    const isListSelected = id => {
+        selectedView.type === 'list' && selectedView.id === id;
+    }
+    const isCategorySelected = key => {
+        selectedView.type === 'category' && selectedView.key === key;
+    }
+
     return (
         <div className={styles.leftSidebar}>
             <input
@@ -18,10 +27,33 @@ function Sidebar( { lists, onSelectList, onCreateList, selectedId}) {
             />
     
             <div className={styles.categoryBtns}>
-                <button className={styles.categoryBtn}>🗂️ All</button><br/>
+                <button 
+                    className={styles.categoryBtn}
+                    onClick={() => onSelectCategory('all')}
+                >
+                    🗂️ All
+                </button><br/>
+
+
                 <button className={styles.categoryBtn}>💡 Today</button><br/>
-                <button className={styles.categoryBtn}>❗️ Important</button><br/>
-                <button className={styles.categoryBtn}>📆 Calendar</button>
+
+                <button 
+                    className={styles.categoryBtn}
+                    onClick={() => onSelectCategory('important')}
+                >
+                    ❗️ Important
+                </button><br/>
+
+                <button className={styles.categoryBtn}>📆 Calendar</button><br/>
+
+
+                <button 
+                    className={styles.categoryBtn}
+                    onClick={() => onSelectCategory('completed')}
+                >
+                    ✅ Completed
+
+                </button>
             </div>
     
             <div className={styles.myListsBtns}>
@@ -36,7 +68,7 @@ function Sidebar( { lists, onSelectList, onCreateList, selectedId}) {
                 <button
                     key={list.id}
                     className={styles.myListsBtns}
-                    onClick={() => onSelectList(list)}
+                    onClick={() => onSelectList(list.id)}
                 >
                     {list.emoji} {list.name}
                 </button>
@@ -49,4 +81,3 @@ function Sidebar( { lists, onSelectList, onCreateList, selectedId}) {
 
 
 export default Sidebar;
-
