@@ -8,18 +8,26 @@ import TaskList from '../TaskList/TaskList.jsx';
 { /* Aka displays: The List title, the add task field, and the different tasks in the list */ }
 function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleImportant } ) {
 
+    // Get the selected list (if any)
+    const selectedList = 
+        selectedView.type === "list" ? 
+        lists.find(list => list.id === selectedView.listId)
+        : null;
 
-    // Derive the tasks and title from the list selected by selectedView
+
+    // Derive the tasks and title
     let tasks = [];
-    let title = ""; 
-
-    if (selectedView.type === "list") {
-        const list = lists.find(list => list.id === selectedView.listId);
-        tasks = list ? list.tasks : [];
-        title = list ? `${list.emoji} ${list.name}` : "Select a list to view tasks";
+    let title = "";
+    if (selectedList) {
+        // List view
+        tasks = selectedList.tasks;
+        title = `${selectedList.emoji} ${selectedList.name}`;
     } else {
-        // Flatten the tasks array
+        // Category view
+        title = "Please select a list to view tasks";
         const allTasks = lists.flatMap(list => list.tasks);
+
+        // Flatten the tasks array
         switch (selectedView.key) {
             case "all":
                 tasks = allTasks;
@@ -28,6 +36,7 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
             case "today":
                 //tasks = allTasks.filter(task => task.dueDate === ?);
                 title = "💡 Today's Tasks";
+                break;
             case "important":
                 tasks = allTasks.filter(task => task.important);
                 title = "❗️ Important Tasks";
@@ -37,7 +46,7 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
                 title = "✅ Completed Tasks";
                 break;
             default:
-                tasks = [];
+                tasks;
                 title = "";
         }
     }
@@ -45,9 +54,11 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
     
     return(
         <div className={styles.taskAreaContainer}>
-            <h2 className={styles.listTitle}>{title}</h2>
+            <h2 className={styles.listTitle}>
+                {selectedList ? title : "Select a list to view tasks"}
+            </h2>
             {/* Only allows adding when viewing a single list */}
-            {selectedView.type === "list" && (
+            {selectedList && (
                 <TaskInput
                     onAddTask={onAddTask}
                 />
