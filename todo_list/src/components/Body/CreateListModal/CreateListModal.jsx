@@ -1,20 +1,25 @@
 import React, { useState, useCallback } from 'react';
 import styles from './CreateListModal.module.css';
 import EmojiPicker from 'emoji-picker-react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { format } from 'date-fns';
 
 
 function CreateListModal({ onCreate, onCancel }) {
     const [name, setName] = useState("");
     const [emoji, setEmoji] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [selectedDay, setSelectedDay] = useState(null);
 
 
     // This is used to handle if the name is empty when the user presses enter
     const handleCreateList = useCallback(() => {
         const trimmed = name.trim();
         if(!trimmed) return;
-        onCreate({ name: trimmed, emoji });
-    }, [name, emoji, onCreate]);
+        onCreate({ name: trimmed, emoji, date: selectedDay });
+    }, [name, emoji, selectedDay, onCreate]);
     const canCreateList = Boolean(name.trim());
 
     return (
@@ -49,7 +54,7 @@ function CreateListModal({ onCreate, onCancel }) {
                             handleCreateList();
                         }
                     }}
-                /><br/>
+                /><br/>                
                 
                 <div className={styles.modalBtns}>
                     <button 

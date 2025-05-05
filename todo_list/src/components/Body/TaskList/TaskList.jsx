@@ -7,7 +7,7 @@ import TaskItem from '../TaskItem/TaskItem.jsx';
 
 
 { /* Displays the task objects in the selected list */ }
-function TaskList( { tasks, onToggleComplete, onToggleImportant } ) {
+function TaskList( { tasks, onToggleComplete, onToggleImportant, onOpenDetails } ) {
     return (
         <div className={styles.taskListContainer}>
             {tasks.map((task) => (
@@ -16,6 +16,7 @@ function TaskList( { tasks, onToggleComplete, onToggleImportant } ) {
                     task={task}
                     onToggleComplete={onToggleComplete}
                     onToggleImportant={onToggleImportant}
+                    onOpenDetails={() => onOpenDetails(task)}
                 />
             ))}
         </div>

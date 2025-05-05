@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TaskItem.module.css';
 
-function TaskItem ( { task, onToggleComplete, onToggleImportant } ) {
+function TaskItem ( { task, onToggleComplete, onToggleImportant, onOpenDetails } ) {
     return (
         <div className={styles.taskItemContainer}>
             <input
@@ -21,6 +21,16 @@ function TaskItem ( { task, onToggleComplete, onToggleImportant } ) {
             >
                 ❗️
             </button>
+
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenDetails(task);
+                }}
+            >
+                Details
+            </button>
+
 
         </div>
     );

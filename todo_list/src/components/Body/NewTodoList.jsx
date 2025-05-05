@@ -3,30 +3,45 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar/Sidebar.jsx';
 import CreateListModal from './CreateListModal/CreateListModal.jsx';
 import TaskArea from './TaskArea/TaskArea.jsx';
+import TaskDetails from './TaskDetails/TaskDetails.jsx';
 import { v4 as uuidv4 } from 'uuid';
-import CalendarView from './CalendarView/CalendarView.jsx';
+
 
 function NewTodoList() {
 
     {/* STATES */}
     // State to hold the list of tasks
     const [tasks, setTasks] = useState([
-        { id: 1, name: "Task 1", completed: false, important: false, dueDate: null}]);
+        { id: 1, 
+        name: "Task 1", 
+        completed: false, 
+        important: false, 
+        dueDate: null}]
+    );
 
-
-
-
+        
     // State to hold the list of user-created lists
     const [myLists, setMyLists] = useState([]);
+
     // State for selecting lists to add tasks to
     //const [selectedList, setSelectedList] = useState(null);
+
     // State for modal to create new lists
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+    // State for selecting view (list or category)
     const [selectedView, setSelectedView] = useState({
         type: "list",
         id: null
-    })
+    });
+
+    // State for task details
+    const [selectedTask, setSelectedTask] = useState(null);
+
+    // State for task details modal
+    const [isTaskDetailsOpen, setIsTaskDetailsOpen] = useState(false);
+
 
 
     {/* FUNCTIONS */}
@@ -99,6 +114,29 @@ function NewTodoList() {
         );
     }
 
+    {/* Function to update tasks*/}
+    function handleUpdateTask(updatedTask) {
+        if (!selectedTask) return;
+        // Get the selected list
+        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        // Update the task objects and the selected list in view
+        const updatedTasks = selectedList.tasks.map(task =>
+            task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+        );
+        const updatedList = { ...selectedList, tasks: updatedTasks };
+        // Update the user-created lists field
+        setMyLists(prevLists =>
+            prevLists.map(list =>
+                list.id === updatedList.id ? updatedList : list
+            )
+        );
+    }
+
+    {/* Function to delete tasks */}
+    function handleDeleteTask(taskId) {
+        return;
+    }
+
     return(
         /* Main div holding the left side-bar, main body, and right side-bar */
         <div className={styles.container}>
@@ -122,6 +160,10 @@ function NewTodoList() {
                 onAddTask={handleAddTask}
                 onToggleComplete={id => toggleTask(id, "completed")}
                 onToggleImportant={id => toggleTask(id, "important")}
+                onOpenDetails={task => {
+                    setSelectedTask(task);
+                    setIsTaskDetailsOpen(true);
+                }}
 
             />
             {isModalOpen && (
@@ -130,6 +172,21 @@ function NewTodoList() {
                     onCancel={() => setIsModalOpen(false)}
                 />
             )}
+
+            {/* Right sidebar */}
+            {/* This is where the task details will be shown if it is open */}
+            {isTaskDetailsOpen && (
+                <TaskDetails
+                    task={selectedTask}
+                    onUpdate={handleUpdateTask}
+                    onClose={() => setIsTaskDetailsOpen(false)}
+                    onDelete={handleDeleteTask}
+                />
+            )}
+
+            
+
+
         </div>
     );
 }

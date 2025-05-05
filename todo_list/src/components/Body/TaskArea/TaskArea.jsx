@@ -7,7 +7,13 @@ import CalendarView from '../CalendarView/CalendarView.jsx';
 
 { /* Displays the main body (or middle part) of the page */ }
 { /* Aka displays: The List title, the add task field, and the different tasks in the list */ }
-function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleImportant } ) {
+function TaskArea({ 
+    lists, 
+    selectedView, 
+    onAddTask, 
+    onToggleComplete, 
+    onToggleImportant, 
+    onOpenDetails }) {
 
     // Get the selected list (if any)
     const selectedList = 
@@ -82,6 +88,7 @@ function TaskArea( { lists, selectedView, onAddTask, onToggleComplete, onToggleI
                 tasks={tasks}
                 onToggleComplete={onToggleComplete}
                 onToggleImportant={onToggleImportant}
+                onOpenDetails={onOpenDetails}
             />
         </div>
     );
