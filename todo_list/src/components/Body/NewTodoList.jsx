@@ -73,7 +73,8 @@ function NewTodoList() {
             id: uuidv4(),
             name: taskName,
             completed: false,
-            important: false
+            important: false,
+            dueDate: null
         };  
 
         // Find the selected list
