@@ -134,7 +134,24 @@ function NewTodoList() {
 
     {/* Function to delete tasks */}
     function handleDeleteTask(taskId) {
-        return;
+
+        if (!selectedTask) return;
+        // Get the selected list
+        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        // Filter out the task to be deleted
+        const updatedTasks = selectedList.tasks.filter(task => task.id !== taskId);
+        // Create an updated list with the remaining tasks
+        const updatedList = { ...selectedList, tasks: updatedTasks };
+        // Update the user-created lists field
+        setMyLists(prevLists =>
+            prevLists.map(list =>
+                list.id === updatedList.id ? updatedList : list
+            )
+        );
+        // Close the task details modal
+        setIsTaskDetailsOpen(false);
+        // Clear the selected task
+        setSelectedTask(null);
     }
 
     return(

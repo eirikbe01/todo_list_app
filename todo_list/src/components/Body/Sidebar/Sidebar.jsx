@@ -60,6 +60,7 @@ function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreat
                     ✅ Completed
 
                 </button>
+
             </div>
     
             <div className={styles.myListsBtns}>
