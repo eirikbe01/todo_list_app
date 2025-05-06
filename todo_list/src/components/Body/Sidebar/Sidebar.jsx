@@ -36,7 +36,12 @@ function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreat
                 </button><br/>
 
 
-                <button className={styles.categoryBtn}>💡 Today</button><br/>
+                <button 
+                    className={styles.categoryBtn}
+                    onClick={() => onSelectCategory('today')}
+                >
+                    💡 Today
+                </button><br/>
 
                 <button 
                     className={styles.categoryBtn}

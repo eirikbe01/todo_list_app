@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './TaskDetails.module.css';
 import { DayPicker } from 'react-day-picker';
 
 
 function TaskDetails( { task, onUpdate, onClose, onDelete }) {
+
+    const [showCalendar, setShowCalendar] = useState(false);
+
 
     if(!task) return;
 
@@ -16,36 +19,43 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
 
 
             {/* Due date display */}
-            <p className={styles.dueDateContainer}>
-                <h3>Due Date:</h3>
-                {task.dueDate
+            <div className={styles.dueDateContainer}>
+                <h3>Due Date: {task.dueDate
                     ? task.dueDate.toLocaleDateString()
-                    : "None set"}
-            </p>
+                    : "None set"}</h3>
+            </div>
+
+            <button
+                onClick={() => setShowCalendar(true)}
+            >
+                {task.dueDate === null ? 
+                "Set a due date" : "Change due date"}
+
+            </button>
             <button
                 onClick={() => onUpdate({ ...task, dueDate: null})}
             >
-                Clear Due Date
+                Clear due date
             </button>
-            
 
             { /* Calendar */ }
-            <DayPicker
-                numberOfMonths={1}
-                animate={true}
-                mode="single"
-                selected={task.dueDate}
-                onSelect={newDate => onUpdate({ ...task, dueDate: newDate })}
-            />
-            <button
-                onClick={onClose}
-            >
-                Close
-            </button>
+            {showCalendar && (
+                <DayPicker
+                    numberOfMonths={1}
+                    animate={true}
+                    mode="single"
+                    selected={task.dueDate}
+                    onSelect={newDate => {
+                        onUpdate({ ...task, dueDate: newDate});
+                        setShowCalendar(false);
+                    }}
+                />
+            )}
+
             <button
                 onClick={() => onDelete(task.id)}
             >
-                Delete
+                Delete Task
             </button>
         </div>
         

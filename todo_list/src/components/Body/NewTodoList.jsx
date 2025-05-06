@@ -6,7 +6,6 @@ import TaskArea from './TaskArea/TaskArea.jsx';
 import TaskDetails from './TaskDetails/TaskDetails.jsx';
 import { v4 as uuidv4 } from 'uuid';
 
-
 function NewTodoList() {
 
     {/* STATES */}
@@ -125,12 +124,16 @@ function NewTodoList() {
             task.id === updatedTask.id ? { ...task, ...updatedTask } : task
         );
         const updatedList = { ...selectedList, tasks: updatedTasks };
+
         // Update the user-created lists field
         setMyLists(prevLists =>
             prevLists.map(list =>
                 list.id === updatedList.id ? updatedList : list
             )
         );
+
+        // Ensures TaskDetails re-renders the task when updating
+        setSelectedTask(updatedTask);
     }
 
     {/* Function to delete tasks */}

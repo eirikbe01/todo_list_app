@@ -3,6 +3,7 @@ import styles from './TaskArea.module.css';
 import TaskInput from '../TaskInput/TaskInput.jsx';
 import TaskList from '../TaskList/TaskList.jsx';
 import CalendarView from '../CalendarView/CalendarView.jsx';
+import { isSameDay } from 'date-fns';
 
 
 { /* Displays the main body (or middle part) of the page */ }
@@ -25,13 +26,14 @@ function TaskArea({
     // Derive the tasks and title
     let tasks = [];
     let title = "";
+    let today = new Date();
+    const allTasks = lists.flatMap(list => list.tasks);
     if (selectedList) {
         // List view
         tasks = selectedList.tasks;
         title = `${selectedList.emoji} ${selectedList.name}`;
     } else {
         // Category view
-        const allTasks = lists.flatMap(list => list.tasks);
 
         // Flatten the tasks array
         switch (selectedView.key) {
@@ -40,7 +42,8 @@ function TaskArea({
                 title = "🗂️ All Tasks";
                 break;
             case "today":
-                //tasks = allTasks.filter(task => task.dueDate === ?);
+                tasks = allTasks.filter(task => 
+                    task.dueDate && isSameDay(task.dueDate, today));
                 title = "💡 Today's Tasks";
                 break;
             case "important":
@@ -49,6 +52,7 @@ function TaskArea({
                 break;
             case "calendar":
                 title = "📆 Calendar View";
+                tasks = allTasks;
                 break;
             case "completed":
                 tasks = allTasks.filter(task => task.completed);
@@ -66,7 +70,12 @@ function TaskArea({
         return (
             <div className={styles.taskAreaContainer}>
                 <h2 className={styles.listTitle}>{title}</h2>
-                <CalendarView lists={lists}/>
+                <CalendarView
+                    allTasks={allTasks}
+                    onToggleComplete={onToggleComplete}
+                    onToggleImportant={onToggleImportant}
+                    onOpenDetails={onOpenDetails}
+                />
             </div>
         );
     }
