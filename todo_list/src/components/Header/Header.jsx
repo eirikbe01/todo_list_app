@@ -21,10 +21,6 @@ function Header() {
                     
                     <span className={styles.header__label}>Username</span>
                 </div>
-                <div className={styles.header__item}>
-                    <img className={styles.header__icon} src={bellIcon} alt="Bell icon" />
-                    <span className={styles.header__label}>Notifications</span>
-                </div>
             </div>
             
             {/* Center of the header */}

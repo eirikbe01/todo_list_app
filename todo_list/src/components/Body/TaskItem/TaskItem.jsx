@@ -16,19 +16,21 @@ function TaskItem ( { task, onToggleComplete, onToggleImportant, onOpenDetails }
 
             <button
                 onClick={() => onToggleImportant(task.id)}
-                className={`${task.important ? styles.importantActive : ""}`}
+                className={`${task.important ? styles.importantActive : styles.importantBtn}`}
                 title="Mark as important"
             >
                 ❗️
             </button>
 
             <button
+                className={styles.detailsBtn}
+                title="Edit"
                 onClick={(e) => {
                     e.stopPropagation();
                     onOpenDetails(task);
                 }}
             >
-                Details
+                📝
             </button>
 
 

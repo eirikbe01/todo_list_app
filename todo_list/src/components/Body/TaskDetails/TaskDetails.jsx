@@ -12,10 +12,16 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
 
     return (
         <div className={styles.taskDetailsContainer}>
-            <h2 className={styles.taskTitle}>{task.name}</h2>
-            <button className={styles.closeModalBtn}
-                onClick={onClose}>x
-            </button>
+            <header className={styles.header}>
+                <h2 className={styles.taskTitle}>{task.name}</h2>
+                {/* Close details sidebar */}
+                <button 
+                    className={styles.closeModalBtn}
+                    onClick={onClose}
+                >
+                    x
+                </button>
+            </header>
 
 
             {/* Due date display */}
@@ -23,22 +29,23 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
                 <h3>Due Date: {task.dueDate
                     ? task.dueDate.toLocaleDateString()
                     : "None set"}</h3>
-            </div>
 
-            <button
-                onClick={() => setShowCalendar(true)}
-            >
+                <button
+                    className={styles.taskDetailsBtns}
+                    onClick={() => setShowCalendar(true)}
+                >
                 {task.dueDate === null ? 
                 "Set a due date" : "Change due date"}
+                </button>
+                <button
+                    className={styles.taskDetailsBtns}
+                    onClick={() => onUpdate({ ...task, dueDate: null})}
+                >
+                    Clear due date
+                </button>
+            </div>
 
-            </button>
-            <button
-                onClick={() => onUpdate({ ...task, dueDate: null})}
-            >
-                Clear due date
-            </button>
-
-            { /* Calendar */ }
+            { /* Calendar for due dates*/ }
             {showCalendar && (
                 <DayPicker
                     numberOfMonths={1}
@@ -52,11 +59,35 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
                 />
             )}
 
+
+            {/* File attachment button */}
             <button
+                className={styles.taskDetailsBtns}
+            >
+                Attach a file
+            </button>
+
+            <p
+                className={styles.taskDescription}
+            >
+                Description
+            </p>
+            <textarea
+                className={styles.descriptionField}
+                type="text"
+                placeholder="Describe the task..."
+            />
+
+
+            {/* Delete task */}
+            <button
+                className={styles.deleteTaskBtn}
                 onClick={() => onDelete(task.id)}
             >
                 Delete Task
             </button>
+
+
         </div>
         
     );

@@ -1,10 +1,11 @@
 
 /* This container holds the task details */
 /* When user clicks on a task, it slides into view and sticks to the right of the page */ 
-.taskDetailsContainer {
+.taskDetailsContainer1 {
     position: fixed;
     top: 0;
     right: 0;
+    padding: 10px;
     width: 300px;
     height: 100%;
     border: 1px solid black;
@@ -15,36 +16,105 @@
 }
 
 
-.taskDetailsHeader {
-    
+.taskDetailsContainer {
+    position: fixed;
+    right: 0;
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsl(0, 0%, 58%);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.6);
+    width: 400px;
+    height: 100vh;
+    padding: 20px 20px;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    background-color: hsl(0, 0%, 95%);
+    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.4);
+    margin: 1.2rem;
 }
 
 .taskTitle{
-    padding: 0.75rem;
+    padding: 0.2rem;
 }
 
 .taskDescription{
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    padding: 5px;
+    border: none;
+    background-color: hsl(0, 0%, 100%);
+    width: 5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.2);
+    
+}
 
+.descriptionField{
+    width: 100%;
+    min-height: 15rem;
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: box-shadow .2s;
+}
+
+.descriptionField:focus{
+    outline: none;
+    box-shadow: 0 0 0 2px hsla(217, 91%, 60%, 0.5);
 }
 
 
-.taskDueDate{
-
-}
-
-.taskFileInput{
-
-}
-
-
+/* BUTTONS */
 .closeModalBtn{
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: red;
+    background-color: hsl(0, 100%, 65%);
     border: none;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 5px 10px;
+    margin-bottom: 10px;
     cursor: pointer;
+}
+
+
+.taskDetailsBtns {
+    border-radius: 10px;
+    border: 1px solid hsl(0, 0%, 58%);
+    background-color: hsl(134, 49%, 68%);
+    padding: 5px 7px;
+    gap: 0.5rem;
+    margin: 0.3rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.deleteTaskBtn {
+    border-radius: 10px;
+    border: 1px solid hsl(0, 0%, 58%);
+    background-color: hsl(0, 100%, 65%);
+    padding: 5px 7px;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.deleteTaskBtn:hover{
+    background-color: hsl(0, 100%, 40%);
 }

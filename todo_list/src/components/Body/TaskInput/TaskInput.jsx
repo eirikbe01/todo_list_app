@@ -20,6 +20,13 @@ function TaskInput({ onAddTask }) {
     };
     return (
         <div className={styles.inputContainer}>
+            <button
+                className={styles.addTaskBtn}
+                onClick={submit}
+                disabled={!trimmed}
+            >
+                ➕
+            </button>
             <input
                 className={styles.inputField}
                 type="text"
@@ -28,13 +35,6 @@ function TaskInput({ onAddTask }) {
                 onChange={(e) => setNewTask(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && trimmed && submit()}
             />
-            <button
-                className={styles.addTaskBtn}
-                onClick={submit}
-                disabled={!trimmed}
-            >
-                ➕
-            </button>
         </div>
     );
 }

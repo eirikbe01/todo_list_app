@@ -1,23 +1,86 @@
 .taskItemContainer{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 1rem;
+    font-size: 1.2rem;
     background-color: white;
     padding: 0.75rem 0.75rem;
-    width: 100%;
     max-width: 600px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
+
+
+
 .completed{
     text-decoration: line-through;
     color: hsl(0, 0%, 50%);
+    font-size: 1.2rem;
 }
 
 
 .importantActive{
-    background-color: #ffcc00;
+    border-radius: 50%;
+    background-color: hsl(0, 100%, 82%);
     color: white;
+    font-size: 1.2rem;
+    border: none;
 }
+
+.importantBtn{
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 1.2rem;
+}
+
+.detailsBtn{
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 1.2rem;
+}
+
+
+/* 1. Base checkbox (as before) */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #001f3f;    /* navy border */
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: background-color 0.1s, border-color 0.1s;
+  }
+  
+  /* 2. When checked, fill the circle */
+  input[type="checkbox"]:checked {
+    background-color: hsl(134, 49%, 68%);  /* mint green background */
+    border-color: hsl(134, 49%, 68%);
+  }
+  
+  /* 3. Create the check-mark */
+  input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 12px;
+    border: solid white;          /* white check */
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg) scale(0);
+    transition: transform 0.1s ease-in-out;
+  }
+  
+  /* 4. Show the check-mark when checked */
+  input[type="checkbox"]:checked::after {
+    transform: translate(-50%, -60%) rotate(45deg) scale(1);
+  }
+  
