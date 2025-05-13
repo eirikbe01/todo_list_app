@@ -15,7 +15,8 @@ function NewTodoList() {
         name: "Task 1", 
         completed: false, 
         important: false, 
-        dueDate: null}]
+        dueDate: null,
+        description: null}]
     );
 
         
@@ -57,7 +58,7 @@ function NewTodoList() {
         setMyLists(prev => [...prev, newList]);
 
         // Set the selected view to the new list
-        setSelectedView({type: "list", listId: newList.id});
+        setSelectedView({type: "list", id: newList.id});
 
         // Close the modal
         setIsModalOpen(false);
@@ -65,7 +66,7 @@ function NewTodoList() {
 
     {/* Function to add new tasks to selected list */}
     function handleAddTask(taskName) {
-        if (taskName.trim === "" || selectedView.type !== "list") return;
+        if (taskName.trim() === "" || selectedView.type !== "list") return;
 
         // Create a new task object
         const newTaskObj = {
@@ -73,11 +74,12 @@ function NewTodoList() {
             name: taskName,
             completed: false,
             important: false,
-            dueDate: null
-        };  
+            dueDate: null,
+            description: null
+        };
 
         // Find the selected list
-        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        const selectedList = myLists.find(list => list.id === selectedView.id);
         // Create an updated list with the new task
         const updatedList = {
             ...selectedList, tasks: [...selectedList.tasks, newTaskObj]
@@ -91,14 +93,13 @@ function NewTodoList() {
         );
     }
 
-
     {/* Function to toggle flags (important, completed) */}
     function toggleTask(taskId, field) {
         // If the selected view is not a list, return nothing
         if (selectedView.type !== "list") return;
 
         // Get the selected list
-        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        const selectedList = myLists.find(list => list.id === selectedView.id);
 
         // Update the task objects and the selected list in view
         const updatedTasks = selectedList.tasks.map(task => 
@@ -117,13 +118,21 @@ function NewTodoList() {
     {/* Function to update tasks*/}
     function handleUpdateTask(updatedTask) {
         if (!selectedTask) return;
+
         // Get the selected list
-        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        let parentList = myLists.find(list => list.id === selectedView.id);
+        // ...we are in search mode
+        if(!parentList) {
+            parentList = myLists.find(list =>
+                list.tasks.some(t => t.id === updatedTask.id)
+            );
+        }
+        if (!parentList) return;
         // Update the task objects and the selected list in view
-        const updatedTasks = selectedList.tasks.map(task =>
+        const updatedTasks = parentList.tasks.map(task =>
             task.id === updatedTask.id ? { ...task, ...updatedTask } : task
         );
-        const updatedList = { ...selectedList, tasks: updatedTasks };
+        const updatedList = { ...parentList, tasks: updatedTasks };
 
         // Update the user-created lists field
         setMyLists(prevLists =>
@@ -141,11 +150,18 @@ function NewTodoList() {
 
         if (!selectedTask) return;
         // Get the selected list
-        const selectedList = myLists.find(list => list.id === selectedView.listId);
+        let parentList = myLists.find(list => list.id === selectedView.id);
+        // ...we are in search mode
+        if(!parentList) {
+            parentList = myLists.find(list =>
+                list.tasks.some(t => t.id === taskId)
+            );
+        }
+        if (!parentList) return;
         // Filter out the task to be deleted
-        const updatedTasks = selectedList.tasks.filter(task => task.id !== taskId);
+        const updatedTasks = parentList.tasks.filter(task => task.id !== taskId);
         // Create an updated list with the remaining tasks
-        const updatedList = { ...selectedList, tasks: updatedTasks };
+        const updatedList = { ...parentList, tasks: updatedTasks };
         // Update the user-created lists field
         setMyLists(prevLists =>
             prevLists.map(list =>
@@ -158,20 +174,30 @@ function NewTodoList() {
         setSelectedTask(null);
     }
 
+    {/* Function to search for tasks */}
+    function handleSearchTasks(name) {
+        const allTasks = myLists.flatMap(list => list.tasks);
+        const matches = allTasks.filter(task =>
+            task.name.toLowerCase().includes(name.trim().toLowerCase())
+        );
+        // switch to search mode, passing the results
+        setSelectedView({ type: "search", results: matches, term: name })
+    }
+
     return(
         /* Main div holding the left side-bar, main body, and right side-bar */
         <div className={styles.container}>
             {/* Left side-bar */}
             <Sidebar
                 lists={myLists}
-                selectedView={selectedView}
-                onSelectList={listId => 
-                    setSelectedView({ type: "list", listId })
+                onSelectList={id => 
+                    setSelectedView({ type: "list", id })
                 }
                 onSelectCategory={key =>
                     setSelectedView({ type: "category", key })
                 }
                 onCreateList={() => setIsModalOpen(true)}
+                onSearchTasks={term => handleSearchTasks(term)}
             />
 
             {/* Main body */}
@@ -199,14 +225,12 @@ function NewTodoList() {
             {isTaskDetailsOpen && (
                 <TaskDetails
                     task={selectedTask}
+                    isOpen={true}
                     onUpdate={handleUpdateTask}
                     onClose={() => setIsTaskDetailsOpen(false)}
                     onDelete={handleDeleteTask}
                 />
             )}
-
-            
-
 
         </div>
     );

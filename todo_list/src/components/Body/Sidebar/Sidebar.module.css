@@ -25,17 +25,43 @@
     outline: none;
 }
 
+.searchBtn{
+    border-radius: 10px;
+    border: 1px solid hsl(0, 0%, 58%);
+    background-color: hsl(214, 100%, 88%);
+    padding: 4px 10px;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    /* Font styling */
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
+    font-size: 1rem; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
+}
+
 .categoryBtns button{
     border-radius: 10px;
     border: 1px solid hsl(0, 0%, 58%);
     background-color: hsl(134, 49%, 68%);
-    padding: 5px 7px;
+    padding: 7px 10px;
     margin-bottom: 10px;
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
     transition: background-color 0.3s ease, transform 0.2s ease;
+
+    /* Font styling */
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
+    font-size: 1rem; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
 }
+
+
 
 .myListsBtns button{
     display: flex;
@@ -51,6 +77,13 @@
     cursor: pointer;
     box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.3);
     transition: background-color 0.3s ease, transform 0.2s ease;
+
+    /* Font styling */
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
+    font-size: 1rem; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
 }
 
 .myListsTitle{
@@ -66,4 +99,14 @@
 button:hover{
     background-color: hsl(60, 56%, 100%);
     transform: scale(1.03);
+}
+
+
+.categoryBtns { 
+    font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif; 
+    font-size: 1rem; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
+    line-height: 20px; 
 }

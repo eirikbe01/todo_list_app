@@ -1,46 +1,92 @@
 .taskItemContainer{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     font-size: 1.2rem;
     background-color: white;
     padding: 0.75rem 0.75rem;
-    max-width: 600px;
+    max-width: 400px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+    /* Font styling */
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif; 
+    font-size: 1.2rem; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
 }
 
+/* 1) Base “icon button” style */
+.iconBtn {
+  /* remove native button styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
+  /* shape & sizing */
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;          /* perfect circle */
 
+  /* center any icon/text inside */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* visuals & interactivity */
+  background-color: white;
+  color: #001f3f;              /* icon color */
+  cursor: pointer;
+  transition: 
+    background-color 0.1s ease-in-out,
+    border-color     0.1s ease-in-out,
+    color            0.1s ease-in-out;
+  outline: none;
+}
+
+.iconBtn:hover {
+  background-color: hsl(0, 0%, 95%);
+}
+
+.importantBtn {
+  composes: iconBtn;
+  font-size: 1.2rem;
+}
+
+/* 3) Details/Edit button */
+.detailsBtn {
+  composes: iconBtn;
+  font-size: 1.2rem;
+}
+
+/* 4) Active/“filled” state for important */
+.importantActive {
+  composes: iconBtn;
+  font-size: 1.2rem;
+
+  /* mint-green fill */
+  background-color: hsl(0, 100%, 82%);
+  border-color:    hsl(0, 100%, 82%);
+  color: white;        /* icon/text turns white */
+}
+
+/* 5) (Optional) Active state for details, if you ever need it */
+.detailsActive {
+  composes: iconBtn;
+
+  /* pick your fill color */
+  background-color: hsl(210, 100%, 60%);
+  border-color:    hsl(210, 100%, 60%);
+  color: white;
+}
 
 .completed{
-    text-decoration: line-through;
-    color: hsl(0, 0%, 50%);
-    font-size: 1.2rem;
-}
-
-
-.importantActive{
-    border-radius: 50%;
-    background-color: hsl(0, 100%, 82%);
-    color: white;
-    font-size: 1.2rem;
-    border: none;
-}
-
-.importantBtn{
-    border: none;
-    border-radius: 50%;
-    background-color: white;
-    font-size: 1.2rem;
-}
-
-.detailsBtn{
-    border: none;
-    border-radius: 50%;
-    background-color: white;
-    font-size: 1.2rem;
+  text-decoration: line-through;
+  color: hsl(0, 0%, 50%);
 }
 
 

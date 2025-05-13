@@ -4,28 +4,38 @@
 
 { /*“My Lists” section and “Create” button */ }
 
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Sidebar.module.css';
 
 
-function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreateList }) {
+function Sidebar( { lists, selectedView, onSelectList, onSelectCategory, onCreateList, onSearchTasks }) {
 
-    // used to highlight the selected list / category
-    const isListSelected = id => {
-        selectedView.type === 'list' && selectedView.id === id;
-    }
-    const isCategorySelected = key => {
-        selectedView.type === 'category' && selectedView.key === key;
-    }
+
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     return (
         <div className={styles.leftSidebar}>
             <input
-                type="text"
-                placeholder="Search tasks..."
                 className={styles.searchBar}
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search tasks..."
+                onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                        onSearchTasks(searchTerm);
+                    }
+                }}
             />
-            {/*<button className={styles.searchBtn} onClick={() => searchTasks()}>🔍</button>*/}
+            <button 
+                className={styles.searchBtn} 
+                onClick={() => {
+                    onSearchTasks(searchTerm);
+                }}
+            >
+                🔍
+            </button>
     
             <div className={styles.categoryBtns}>
                 <button 

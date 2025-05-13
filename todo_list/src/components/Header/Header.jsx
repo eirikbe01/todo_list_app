@@ -19,15 +19,14 @@ function Header() {
                 <div className={styles.header__item}>
                     <img className={styles.header__icon} src={profileIcon} alt="Profile icon" />
                     
-                    <span className={styles.header__label}>Username</span>
                 </div>
             </div>
             
             {/* Center of the header */}
             {/* Contains the main logo and title */}
             <div className={styles.header__center}>
-                <img className={styles.header__main__logo} src={checkIcon} alt="Checkmark icon" />
-                <h1>To-do list</h1>
+                <img className={styles.header__main__logo} src={checkIcon} alt="Checkmark logo" />
+                <h1 className={styles.appTitle}>To-do list</h1>
             </div>
 
             {/* Right side of the header */}

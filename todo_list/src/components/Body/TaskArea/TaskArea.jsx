@@ -16,10 +16,36 @@ function TaskArea({
     onToggleImportant, 
     onOpenDetails }) {
 
+    /* If we are in search mode, render search results*/
+    if (selectedView.type === 'search') {
+        const { results, term } = selectedView;
+
+        return (
+        <div className={styles.taskAreaContainer}>
+            <h2 className={styles.listTitle}>
+                Search results for "{term}"
+            </h2>
+
+            {results.length > 0 ? (
+            <TaskList
+                tasks={results}
+                onToggleComplete={onToggleComplete}
+                onToggleImportant={onToggleImportant}
+                onOpenDetails={onOpenDetails}
+            />
+            ) : (
+            <p className={styles.emptyState}>
+                No tasks match "{term}".
+            </p>
+            )}
+        </div>
+        );
+    }
+
     // Get the selected list (if any)
     const selectedList = 
         selectedView.type === "list" ? 
-        lists.find(list => list.id === selectedView.listId)
+        lists.find(list => list.id === selectedView.id)
         : null;
 
 
@@ -84,9 +110,11 @@ function TaskArea({
     return(
         <div className={styles.taskAreaContainer}>
             <h2 className={styles.listTitle}>
-                {selectedList || selectedView.type === "category" ? title : "Select a list to view tasks"}
+                {selectedList || 
+                selectedView.type === "category" ? 
+                title : "Select a list to view tasks"}
             </h2>
-            {/* Only allows adding when viewing a single list */}
+            {/* Only render the input field when viewing a list */}
             {selectedList && (
                 <TaskInput
                     onAddTask={onAddTask}

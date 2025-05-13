@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TaskDetails.module.css';
 import { DayPicker } from 'react-day-picker';
 
 
-function TaskDetails( { task, onUpdate, onClose, onDelete }) {
+function TaskDetails( { task, onUpdate, onClose, onDelete, isOpen }) {
 
     const [showCalendar, setShowCalendar] = useState(false);
+    const [description, setDescription] = useState(task.description || "");
+
+
+    useEffect(() => {
+        setDescription(task.description || "");
+    }, [task.description]);
 
 
     if(!task) return;
 
     return (
-        <div className={styles.taskDetailsContainer}>
+
+        <div className={`${styles.taskDetailsContainer} ${isOpen ? styles.open : ""}`}>
             <header className={styles.header}>
                 <h2 className={styles.taskTitle}>{task.name}</h2>
                 {/* Close details sidebar */}
@@ -59,14 +66,6 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
                 />
             )}
 
-
-            {/* File attachment button */}
-            <button
-                className={styles.taskDetailsBtns}
-            >
-                Attach a file
-            </button>
-
             <p
                 className={styles.taskDescription}
             >
@@ -75,17 +74,43 @@ function TaskDetails( { task, onUpdate, onClose, onDelete }) {
             <textarea
                 className={styles.descriptionField}
                 type="text"
+                value={description}
                 placeholder="Describe the task..."
+                onChange={(e) => setDescription(e.target.value)}
             />
 
-
-            {/* Delete task */}
-            <button
-                className={styles.deleteTaskBtn}
-                onClick={() => onDelete(task.id)}
+            <div
+                className={styles.editTaskBtnsContainer}
             >
-                Delete Task
-            </button>
+
+                <button
+                    className={styles.saveDescBtn}
+                    onClick={() => {
+                            onUpdate({ ...task, description: description.trim() });
+                            onClose();
+                        }}
+                >
+                    Save Description
+                </button>
+
+                {/* File attachment button */}
+                <button
+                    className={styles.attachFileBtn}
+                >
+                    Attach a file
+                </button>
+
+
+
+                {/* Delete task */}
+                <button
+                    className={styles.deleteTaskBtn}
+                    onClick={() => onDelete(task.id)}
+                >
+                    Delete Task
+                </button>
+
+            </div>
 
 
         </div>
