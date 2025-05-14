@@ -5,23 +5,14 @@ import CreateListModal from './CreateListModal/CreateListModal.jsx';
 import TaskArea from './TaskArea/TaskArea.jsx';
 import TaskDetails from './TaskDetails/TaskDetails.jsx';
 import { v4 as uuidv4 } from 'uuid';
+import useLocalStorage from './useLocalStorage.jsx';
 
 function NewTodoList() {
 
     {/* STATES */}
-    // State to hold the list of tasks
-    const [tasks, setTasks] = useState([
-        { id: 1, 
-        name: "Task 1", 
-        completed: false, 
-        important: false, 
-        dueDate: null,
-        description: null}]
-    );
 
-        
     // State to hold the list of user-created lists
-    const [myLists, setMyLists] = useState([]);
+    const [myLists, setMyLists] = useLocalStorage("myLists", []);
 
     // State for selecting lists to add tasks to
     //const [selectedList, setSelectedList] = useState(null);
