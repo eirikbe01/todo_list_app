@@ -3,4 +3,4 @@ A to-do list application
 
 
 # Tech Stack
-React, JavaScript, and Tailwind.
+React with JavaScript
